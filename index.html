@@ -1,0 +1,1868 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRAVEX &mdash; Hotel Occupancy &amp; Rate Loading Logic Training Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- App Container -->
+  <div class="app-layout">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Travex Brand Header -->
+      <div class="sidebar-header">
+        <div class="brand-container">
+          <div class="brand-logo">
+            <span class="logo-text">TRAVEX</span>
+          </div>
+          <div class="brand-tagline">Travel Hosting Simplified</div>
+        </div>
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close sidebar">&times;</button>
+      </div>
+
+      <!-- Training Sandbox Notice Badge -->
+      <div class="sidebar-training-badge">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Interactive Training Portal</span>
+      </div>
+
+      <!-- Navigation Menu (Matches Extranet Screenshot) -->
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#dashboard" class="nav-link" data-tab="dashboard">
+              <span class="nav-icon">
+                <!-- Dashboard Gauge Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M19.07 4.93l-2.83 2.83M22 12h-4M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/>
+                </svg>
+              </span>
+              <span class="nav-label">Dashboard</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#property" class="nav-link active" data-tab="property">
+              <span class="nav-icon">
+                <!-- Property / Document Bed Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 21h18M3 7v14M21 7v14M6 11h12M6 15h12M9 7V3h6v4"/>
+                </svg>
+              </span>
+              <span class="nav-label">Property</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#inventory" class="nav-link" data-tab="inventory">
+              <span class="nav-icon">
+                <!-- Inventory Box Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </svg>
+              </span>
+              <span class="nav-label">Inventory</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#pricing" class="nav-link" data-tab="pricing">
+              <span class="nav-icon">
+                <!-- Pricing Tag / Document Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="12" y1="18" x2="12" y2="12"/>
+                  <line x1="9" y1="15" x2="15" y2="15"/>
+                </svg>
+              </span>
+              <span class="nav-label">Pricing</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#promotions" class="nav-link" data-tab="promotions">
+              <span class="nav-icon">
+                <!-- Promotions Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </span>
+              <span class="nav-label">Promotions</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#gallery" class="nav-link" data-tab="gallery">
+              <span class="nav-icon">
+                <!-- Gallery Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+              </span>
+              <span class="nav-label">Gallery</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#content" class="nav-link" data-tab="content">
+              <span class="nav-icon">
+                <!-- Content Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </span>
+              <span class="nav-label">Content</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#report" class="nav-link" data-tab="report">
+              <span class="nav-icon">
+                <!-- Report / Testing Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+              </span>
+              <span class="nav-label">Report &amp; Testing</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#devcoord" class="nav-link" data-tab="devcoord">
+              <span class="nav-icon">
+                <!-- Dev Coordination / Code Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 18 22 12 16 6"/>
+                  <polyline points="8 6 2 12 8 18"/>
+                </svg>
+              </span>
+              <span class="nav-label">Dev Coordination</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <!-- Extranet Preserved Modules -->
+          <li class="nav-item">
+            <a href="#roles" class="nav-link" data-tab="roles">
+              <span class="nav-icon">
+                <!-- Roles Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </span>
+              <span class="nav-label">Roles</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#staff" class="nav-link" data-tab="staff">
+              <span class="nav-icon">
+                <!-- Staff Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </span>
+              <span class="nav-label">Staff</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#assignhotel" class="nav-link" data-tab="assignhotel">
+              <span class="nav-icon">
+                <!-- Assign Hotel Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </span>
+              <span class="nav-label">Assign Hotel</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#credentials" class="nav-link" data-tab="credentials">
+              <span class="nav-icon">
+                <!-- Credentials Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+              </span>
+              <span class="nav-label">Hotel Credentials</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#meta" class="nav-link" data-tab="meta">
+              <span class="nav-icon">
+                <!-- Meta Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"/>
+                  <circle cx="6" cy="12" r="3"/>
+                  <circle cx="18" cy="19" r="3"/>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+              </span>
+              <span class="nav-label">Meta</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#digitalsign" class="nav-link" data-tab="digitalsign">
+              <span class="nav-icon">
+                <!-- Digital Sign Icon -->
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 20h9"/>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                </svg>
+              </span>
+              <span class="nav-label">Digital Sign</span>
+              <span class="nav-chevron">&rsaquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <div class="quick-status">
+          <span class="status-indicator live"></span>
+          <span>Simulation Active (Local)</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      
+      <!-- TOP NAVIGATION BAR (Exact Extranet Style) -->
+      <header class="top-nav-bar">
+        <div class="top-nav-left">
+          <!-- Mobile Sidebar Toggle -->
+          <button class="mobile-toggle-btn" id="mobileMenuToggle" aria-label="Toggle Navigation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          
+          <!-- 3x3 App Grid Icon from Screenshot -->
+          <button class="app-grid-icon" title="Travex App Launcher" id="appGridBtn">
+            <span class="grid-dot"></span><span class="grid-dot"></span><span class="grid-dot"></span>
+            <span class="grid-dot"></span><span class="grid-dot"></span><span class="grid-dot"></span>
+            <span class="grid-dot"></span><span class="grid-dot"></span><span class="grid-dot"></span>
+          </button>
+        </div>
+
+        <!-- Center Company / Account Label -->
+        <div class="top-nav-center">
+          <span class="account-title">vigneesh travals</span>
+          <span class="account-badge">Training Account</span>
+        </div>
+
+        <!-- Right Side Icons & Profile Avatar -->
+        <div class="top-nav-right">
+          <!-- Notification Bell -->
+          <button class="icon-btn" title="System Notifications" id="notifBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="badge-count">2</span>
+          </button>
+
+          <!-- Messages Icon -->
+          <button class="icon-btn" title="Messages & Clarifications" id="msgBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <circle cx="8" cy="10" r="1"></circle>
+              <circle cx="12" cy="10" r="1"></circle>
+              <circle cx="16" cy="10" r="1"></circle>
+            </svg>
+          </button>
+
+          <!-- Circular User Avatar -->
+          <div class="user-avatar-container" title="User Profile: Vigneesh (Contract Analyst)">
+            <div class="user-avatar">
+              <!-- Illustrated Extranet Avatar -->
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="32" fill="#E28743"/>
+                <circle cx="32" cy="24" r="12" fill="#FFE0B2"/>
+                <!-- Hair / Beard -->
+                <path d="M20 20 C20 12, 44 12, 44 20 C44 22, 42 26, 42 26 C42 26, 38 22, 32 22 C26 22, 22 26, 22 26 Z" fill="#4A2E18"/>
+                <path d="M22 28 C22 36, 42 36, 42 28 C42 33, 40 40, 32 40 C24 40, 22 33, 22 28 Z" fill="#4A2E18"/>
+                <!-- Shirt -->
+                <path d="M12 56 C12 44, 22 42, 32 42 C42 42, 52 44, 52 56 Z" fill="#1E2E4A"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN SCROLLABLE CONTENT AREA -->
+      <main class="main-content">
+        
+        <!-- SECTION / PAGE HEADER (Exact Extranet Style) -->
+        <div class="content-header">
+          <div class="header-left">
+            <h1 class="page-title" id="pageTitle">Property</h1>
+            <div class="page-subtitle" id="pageSubtitle">Room Configuration &amp; Permitted Occupancy Management</div>
+          </div>
+
+          <!-- Hotel Info Block (LOS SANTOS GRAND PALACE) -->
+          <div class="hotel-info-block">
+            <div class="hotel-name">LOS SANTOS GRAND PALACE</div>
+            <div class="hotel-meta">Hotel Id : <span>488</span></div>
+            <div class="hotel-meta">City Name : <span>Dubai</span></div>
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- TAB 1: PROPERTY (Primary View matching screenshot)       -->
+        <!-- ======================================================== -->
+        <section class="tab-pane active" id="propertyPane">
+          
+          <!-- Inner Sub-Navigation Tabs -->
+          <div class="sub-tabs-container">
+            <button class="sub-tab-btn active" data-subtab="roomsListSubtab">Basic Details &amp; Room List</button>
+            <button class="sub-tab-btn" data-subtab="occupancyBasicsSubtab">Occupancy Concepts Guide</button>
+            <button class="sub-tab-btn" data-subtab="validationSimulatorSubtab">Interactive Validation Simulator</button>
+            <button class="sub-tab-btn" data-subtab="caseStudySubtab">2BR Suite Case Study (5A + 1C Issue)</button>
+          </div>
+
+          <!-- Subtab 1: Rooms List (Direct Extranet View) -->
+          <div class="subtab-content active" id="roomsListSubtab">
+            <div class="extranet-card">
+              <!-- Card Top Header -->
+              <div class="card-action-bar">
+                <div class="card-title-group">
+                  <h2 class="card-title">Room Details</h2>
+                  <p class="card-caption">Manage sample room categories, contracted occupancy ceilings, and extranet sync status.</p>
+                </div>
+                
+                <!-- The Mandatory Green Outlined Button from Screenshot -->
+                <button class="btn-green-outlined" id="openAddRoomModalBtn">
+                  <span class="btn-plus-icon">+</span>
+                  <span>ROOM DETAILS</span>
+                </button>
+              </div>
+
+              <!-- Educational Banner inside Extranet -->
+              <div class="training-notice-banner">
+                <div class="notice-icon">&#128161;</div>
+                <div class="notice-text">
+                  <strong>Trainer Note:</strong> Click <strong>+ ROOM DETAILS</strong> to open the exact extranet room configuration modal. You can create new sample room setups or click the green edit icon on any room below to inspect its contracted occupancy rules.
+                </div>
+              </div>
+
+              <!-- Rooms Table / List -->
+              <div class="rooms-table-container">
+                <table class="extranet-table" id="roomsTable">
+                  <thead>
+                    <tr>
+                      <th>Room Name &amp; ID</th>
+                      <th>Room View</th>
+                      <th>Total Rooms</th>
+                      <th>Bed / Bath / Living</th>
+                      <th>Max Occupancy</th>
+                      <th>Extra Occupancy</th>
+                      <th>Age-Based</th>
+                      <th>Sync Status</th>
+                      <th class="text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="roomsTableBody">
+                    <!-- Populated by JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Room Summary Footer -->
+              <div class="table-footer-summary">
+                <span id="roomCountLabel">Showing 5 training sample rooms</span>
+                <button class="btn-text-secondary" id="resetRoomsBtn">&#8635; Reset to Default Sample Rooms</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtab 2: Occupancy Basics Guide (PowerPoint Slides 2-9) -->
+          <div class="subtab-content" id="occupancyBasicsSubtab">
+            <div class="extranet-card">
+              <div class="card-title-group mb-4">
+                <h2 class="card-title">Room Occupancy Fundamentals &mdash; A Beginner's Guide</h2>
+                <p class="card-caption">Learn the foundational rules governing how hotel contracts translate into extranet room parameters.</p>
+              </div>
+
+              <!-- 4 Core Pillars Grid -->
+              <div class="concept-grid">
+                <div class="concept-card">
+                  <div class="concept-badge">Rule 01</div>
+                  <h3>Base vs. Maximum Occupancy</h3>
+                  <p><strong>Base Occupancy</strong> is the number of guests included in the standard room rate (typically 2 adults).</p>
+                  <p><strong>Maximum Capacity</strong> is the absolute ceiling under the hotel fire code and contract. An extra guest is permitted <em>only if explicitly configured</em>.</p>
+                  <div class="concept-callout">Base tells you the base setup; Max tells you the ceiling.</div>
+                </div>
+
+                <div class="concept-card">
+                  <div class="concept-badge">Rule 02</div>
+                  <h3>Combinations &ne; Total Guest Count</h3>
+                  <p>A room with Total Occupancy = 4 does <strong>NOT</strong> automatically permit every combination of 4 guests.</p>
+                  <p><strong>2 Adults + 2 Children</strong> may be permitted, whereas <strong>4 Adults</strong> or <strong>3 Adults + 1 Child</strong> may be strictly prohibited by contract.</p>
+                  <div class="concept-callout alert-warning">Validate the exact adult/child mix, not just the sum!</div>
+                </div>
+
+                <div class="concept-card">
+                  <div class="concept-badge">Rule 03</div>
+                  <h3>Extra Occupancy vs. Extra Bed</h3>
+                  <p><strong>Extra Occupancy:</strong> A contractual permission allowing an additional person into the room.</p>
+                  <p><strong>Extra Bed:</strong> A physical rollaway or sofa bed arrangement requiring physical floor space and separate supplements.</p>
+                  <div class="concept-callout">Permission to stay &ne; provision of an extra physical bed!</div>
+                </div>
+
+                <div class="concept-card">
+                  <div class="concept-badge">Rule 04</div>
+                  <h3>Age-Based Occupancy &amp; Sharing</h3>
+                  <p><strong>Child Sharing:</strong> Child shares existing bedding with adults (subject to age limit and charge policy).</p>
+                  <p><strong>Free Child:</strong> Free accommodation does <em>not</em> guarantee free meals or free extra beds.</p>
+                  <div class="concept-callout">Always verify age bands, meal policies, and bed requirements.</div>
+                </div>
+              </div>
+
+              <!-- Visual Flow: Contract to Booking Pipeline -->
+              <div class="pipeline-section">
+                <h3 class="subsection-title">The Contract-to-Booking Flow</h3>
+                <div class="pipeline-steps">
+                  <div class="pipeline-step">
+                    <div class="step-num">1</div>
+                    <div class="step-title">Hotel Contract</div>
+                    <div class="step-desc">Signed agreement defining room types, allowed combinations, and supplements.</div>
+                  </div>
+                  <div class="pipeline-arrow">&rarr;</div>
+                  <div class="pipeline-step">
+                    <div class="step-num">2</div>
+                    <div class="step-title">Extranet Setup</div>
+                    <div class="step-desc">Load exact occupancy caps (Adult Max, Child Max, Extra Occupancy, Age switches).</div>
+                  </div>
+                  <div class="pipeline-arrow">&rarr;</div>
+                  <div class="pipeline-step">
+                    <div class="step-num">3</div>
+                    <div class="step-title">Validation Engine</div>
+                    <div class="step-desc">Validate guest search against configured rules, ages, and supplement availability.</div>
+                  </div>
+                  <div class="pipeline-arrow">&rarr;</div>
+                  <div class="pipeline-step">
+                    <div class="step-num">4</div>
+                    <div class="step-title">Bookable Offer</div>
+                    <div class="step-desc">Display transparent room rate with exact guest breakdowns. Never guess missing rules!</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtab 3: Interactive Occupancy Validation Simulator -->
+          <div class="subtab-content" id="validationSimulatorSubtab">
+            <div class="extranet-card">
+              <div class="card-title-group mb-4">
+                <h2 class="card-title">Interactive Occupancy Validation Simulator</h2>
+                <p class="card-caption">Test search guest combinations against sample hotel room contracts to verify validation rules in real-time.</p>
+              </div>
+
+              <div class="simulator-layout">
+                <!-- Left: Controls Form -->
+                <div class="sim-controls-panel">
+                  <h3 class="panel-subtitle">1. Guest Search Input</h3>
+                  
+                  <div class="form-group mb-3">
+                    <label class="form-label" for="simRoomSelect">Select Configured Room Category:</label>
+                    <select class="form-select" id="simRoomSelect">
+                      <!-- Populated dynamically from sample rooms -->
+                    </select>
+                  </div>
+
+                  <div class="form-row-3">
+                    <div class="form-group">
+                      <label class="form-label" for="simAdults">Adults:</label>
+                      <select class="form-select" id="simAdults">
+                        <option value="1">1 Adult</option>
+                        <option value="2" selected>2 Adults</option>
+                        <option value="3">3 Adults</option>
+                        <option value="4">4 Adults</option>
+                        <option value="5">5 Adults</option>
+                        <option value="6">6 Adults</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="simChildren">Children (0&ndash;12y):</label>
+                      <select class="form-select" id="simChildren">
+                        <option value="0" selected>0 Children</option>
+                        <option value="1">1 Child</option>
+                        <option value="2">2 Children</option>
+                        <option value="3">3 Children</option>
+                        <option value="4">4 Children</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="simInfants">Infants (0&ndash;2y):</label>
+                      <select class="form-select" id="simInfants">
+                        <option value="0" selected>0 Infants</option>
+                        <option value="1">1 Infant</option>
+                        <option value="2">2 Infants</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Dynamic Child Ages Container -->
+                  <div class="child-ages-container" id="simChildAgesBox" style="display: none;">
+                    <label class="form-label">Specify Individual Child Ages (Years):</label>
+                    <div class="child-age-selectors" id="simChildAgeSelectors">
+                      <!-- Injected via JS based on simChildren count -->
+                    </div>
+                  </div>
+
+                  <div class="form-row-2 mt-3">
+                    <div class="form-group">
+                      <label class="form-label" for="simExtraBed">Extra Bed Requested?</label>
+                      <select class="form-select" id="simExtraBed">
+                        <option value="no" selected>No (Share Bedding)</option>
+                        <option value="yes">Yes (Request Rollaway)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="simAgeBasedToggle">Age-Based Rule Enforced:</label>
+                      <select class="form-select" id="simAgeBasedToggle">
+                        <option value="default" selected>Follow Room Setup</option>
+                        <option value="force_on">Force Age Check ON</option>
+                        <option value="force_off">Force Age Check OFF</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="mt-4">
+                    <button class="btn-purple-primary w-full" id="runValidationBtn">Validate Occupancy Combination</button>
+                  </div>
+                </div>
+
+                <!-- Right: Live Result & Explanation -->
+                <div class="sim-result-panel">
+                  <h3 class="panel-subtitle">2. System Validation Outcome</h3>
+
+                  <!-- Validation Status Banner (Green / Red / Amber) -->
+                  <div class="validation-status-box status-valid" id="simStatusBox">
+                    <div class="status-header">
+                      <span class="status-badge-icon" id="simStatusIcon">&#10003;</span>
+                      <div>
+                        <h4 class="status-title" id="simStatusTitle">Valid in Sample Configuration</h4>
+                        <div class="status-code" id="simStatusCode">RULE MATCH: Permitted Contract Combination</div>
+                      </div>
+                    </div>
+                    <div class="status-body" id="simStatusMessage">
+                      The selected guest mix conforms to the configured room capacity and contracted adult/child limits.
+                    </div>
+                  </div>
+
+                  <!-- Configuration Comparison Metrics -->
+                  <div class="comparison-card mt-3">
+                    <h4 class="comparison-title">Rule Evaluation Breakdown</h4>
+                    <div class="comparison-grid">
+                      <div class="comp-item">
+                        <span class="comp-label">Total Guest Count:</span>
+                        <span class="comp-val" id="compTotalGuests">2 Guests</span>
+                        <span class="comp-limit" id="compTotalLimit">Max Allowed: 3</span>
+                      </div>
+                      <div class="comp-item">
+                        <span class="comp-label">Adults Requested:</span>
+                        <span class="comp-val" id="compAdults">2 Adults</span>
+                        <span class="comp-limit" id="compAdultLimit">Adult Limit: 3</span>
+                      </div>
+                      <div class="comp-item">
+                        <span class="comp-label">Children Requested:</span>
+                        <span class="comp-val" id="compChildren">0 Children</span>
+                        <span class="comp-limit" id="compChildLimit">Child Limit: 1</span>
+                      </div>
+                      <div class="comp-item">
+                        <span class="comp-label">Infants Requested:</span>
+                        <span class="comp-val" id="compInfants">0 Infants</span>
+                        <span class="comp-limit" id="compInfantLimit">Infant Limit: 1</span>
+                      </div>
+                      <div class="comp-item">
+                        <span class="comp-label">Extra Bed Arrangement:</span>
+                        <span class="comp-val" id="compBedArrangement">No Extra Bed</span>
+                        <span class="comp-limit" id="compBedLimit">Capacity: 1 allowed</span>
+                      </div>
+                      <div class="comp-item">
+                        <span class="comp-label">Child Age Classification:</span>
+                        <span class="comp-val" id="compAgeClassification">N/A</span>
+                        <span class="comp-limit" id="compAgeLimit">Standard Policy</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Actionable Clarification Box -->
+                  <div class="clarification-callout mt-3" id="simClarificationBox">
+                    <strong>Business Governance Rule:</strong> Never infer that a guest combination is valid simply because the sum of occupants is within total capacity. If a hotel contract is silent on a specific mix, system must reject or request confirmation.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtab 4: Case Study - The Reported 2BR Bug -->
+          <div class="subtab-content" id="caseStudySubtab">
+            <div class="extranet-card">
+              <div class="case-study-header">
+                <span class="case-badge">CRITICAL BUG CASE STUDY</span>
+                <h2 class="card-title">Production Defect: Two-Bedroom Suite Accepting 5 Adults + 1 Child</h2>
+                <p class="card-caption">Detailed analysis of the reported extranet occupancy flaw and its business impact.</p>
+              </div>
+
+              <div class="case-study-grid">
+                <!-- Current Problem -->
+                <div class="case-card problem-card">
+                  <div class="case-card-tag">Current System Flaw</div>
+                  <h3>The Defect</h3>
+                  <p>A customer searches for <strong>5 Adults + 1 Child (Age 6)</strong>. The system evaluates: <code>Total = 6 guests</code>. Because the 2-Bedroom Suite has a nominal total capacity of 6, the system <strong>accepts</strong> the booking and quotes a rate.</p>
+                  <div class="defect-highlight">
+                    <strong>Reality:</strong> The hotel contract strictly permits a maximum of <strong>4 Adults + 2 Children</strong>, or <strong>4 Adults + 1 Extra Bed</strong>. 5 adults are never permitted in this suite category!
+                  </div>
+                </div>
+
+                <!-- Expected Behavior -->
+                <div class="case-card solution-card">
+                  <div class="case-card-tag">Expected Extranet Behaviour</div>
+                  <h3>Contract Enforcement</h3>
+                  <p>The system must validate the <strong>exact guest tuple</strong>: <code>(Adults: 5, Children: 1)</code> against permitted configuration matrices.</p>
+                  <p>Because the maximum adult cap is 4, the search must be <strong>rejected or suppressed</strong> from the search results, preventing an unfulfillable booking at the front desk.</p>
+                  <div class="solution-highlight">
+                    Rule: <code>Search.Adults (5) &gt; Contract.MaxAdults (4) &rarr; INVALID_COMBINATION</code>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Test Simulation Button for Case Study -->
+              <div class="case-action-box mt-4">
+                <div class="case-action-info">
+                  <h4>Load This Defect in the Validation Simulator</h4>
+                  <p>Click below to automatically load the Two Bedroom Suite with 5 Adults + 1 Child and observe the validation engine catch the violation.</p>
+                </div>
+                <button class="btn-purple-primary" id="loadCaseStudyBtn">Test 5A + 1C in Simulator</button>
+              </div>
+
+              <!-- Requirement Matrix for Developers -->
+              <div class="spec-matrix-table mt-4">
+                <h3 class="subsection-title">Developer Specification Matrix</h3>
+                <table class="extranet-table">
+                  <thead>
+                    <tr>
+                      <th>Scenario</th>
+                      <th>Search Parameters</th>
+                      <th>Current Flawed System</th>
+                      <th>Expected Correct System</th>
+                      <th>Contract Rationale</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="row-highlight-error">
+                      <td><strong>Case 1 (Reported Bug)</strong></td>
+                      <td>5 Adults + 1 Child (Age 6)</td>
+                      <td><span class="status-pill status-red">Accepted (Wrong)</span></td>
+                      <td><span class="status-pill status-green">Rejected / Suppressed</span></td>
+                      <td>Hotel adult ceiling is 4. No physical fifth adult bedding.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Case 2 (Contracted Max)</strong></td>
+                      <td>4 Adults + 2 Children</td>
+                      <td><span class="status-pill status-green">Accepted</span></td>
+                      <td><span class="status-pill status-green">Accepted</span></td>
+                      <td>Standard 2BR setup: 2 Kings / Twin beds accommodating 4 adults + 2 sharing children.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Case 3 (Adults with Extra Bed)</strong></td>
+                      <td>4 Adults + 1 Child + 1 Extra Bed</td>
+                      <td><span class="status-pill status-amber">Ambiguous</span></td>
+                      <td><span class="status-pill status-green">Accepted with Extra Bed Fee</span></td>
+                      <td>Child uses contracted rollaway bed; adult limit respected.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 2: PRICING & RATE LOADING (PowerPoint Slides 10-16)  -->
+        <!-- ======================================================== -->
+        <section class="tab-pane" id="pricingPane">
+          <div class="sub-tabs-container">
+            <button class="sub-tab-btn active" data-subtab="rateLoadingFormSubtab">Rate Loading Form</button>
+            <button class="sub-tab-btn" data-subtab="rateCalculatorSubtab">Transparent Rate Calculator</button>
+            <button class="sub-tab-btn" data-subtab="childPoliciesSubtab">Child &amp; Extra Bed Policies</button>
+            <button class="sub-tab-btn" data-subtab="seasonalRatesSubtab">Seasonal Rates &amp; Date Validity</button>
+          </div>
+
+          <!-- Subtab 1: Rate Loading Form -->
+          <div class="subtab-content active" id="rateLoadingFormSubtab">
+            <div class="extranet-card">
+              <div class="card-action-bar">
+                <div class="card-title-group">
+                  <h2 class="card-title">Contract Rate Loading Workspace</h2>
+                  <p class="card-caption">Load contracted room rates, occupancy supplements, meal inclusions, and seasonal validity.</p>
+                </div>
+                <div class="card-badge-info">All figures in AED (Illustrative)</div>
+              </div>
+
+              <!-- Compact Extranet Form Style -->
+              <form id="rateLoadingForm" class="extranet-form-container">
+                <div class="form-section-title">1. Room &amp; Occupancy Configuration</div>
+                <div class="form-grid-3">
+                  <div class="form-group">
+                    <label class="form-label" for="rateRoomCategory">Room Category*</label>
+                    <select class="form-select" id="rateRoomCategory" required>
+                      <option value="Garden Studio" selected>Garden Studio</option>
+                      <option value="Premier Studio Room">Premier Studio Room</option>
+                      <option value="Night View Studio">Night View Studio</option>
+                      <option value="Two Bedroom Suite">Two Bedroom Suite</option>
+                      <option value="Single Room">Single Room</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rateOccupancyMix">Occupancy Combination*</label>
+                    <select class="form-select" id="rateOccupancyMix" required>
+                      <option value="Double Occupancy (2 Adults)" selected>Double Occupancy (2 Adults)</option>
+                      <option value="Single Occupancy (1 Adult)">Single Occupancy (1 Adult)</option>
+                      <option value="Triple Occupancy (3 Adults)">Triple Occupancy (3 Adults)</option>
+                      <option value="2 Adults + 1 Child">2 Adults + 1 Child</option>
+                      <option value="2 Adults + 2 Children">2 Adults + 2 Children</option>
+                      <option value="4 Adults (Two Bedroom)">4 Adults (Two Bedroom)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rateBasis">Rate Basis*</label>
+                    <select class="form-select" id="rateBasis">
+                      <option value="Per Room Per Night" selected>Per Room Per Night</option>
+                      <option value="Per Person Per Night">Per Person Per Night</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-section-title mt-4">2. Meal Plan &amp; Base Price</div>
+                <div class="form-grid-3">
+                  <div class="form-group">
+                    <label class="form-label" for="rateMealPlan">Meal Plan*</label>
+                    <select class="form-select" id="rateMealPlan" required>
+                      <option value="BB" selected>BB &mdash; Bed &amp; Breakfast</option>
+                      <option value="RO">RO &mdash; Room Only</option>
+                      <option value="HB">HB &mdash; Half Board</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rateBaseAmount">Base Nightly Rate (AED)*</label>
+                    <input type="number" class="form-input" id="rateBaseAmount" value="500" min="50" step="10" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rateSingleAmount">Single Occupancy Discount/Rate (AED)</label>
+                    <input type="number" class="form-input" id="rateSingleAmount" value="400" min="50" step="10">
+                  </div>
+                </div>
+
+                <div class="form-section-title mt-4">3. Contracted Supplements &amp; Child Charges</div>
+                <div class="form-grid-3">
+                  <div class="form-group">
+                    <label class="form-label" for="rateExtraAdult">3rd / Extra Adult Supplement (AED)</label>
+                    <input type="number" class="form-input" id="rateExtraAdult" value="100" min="0" step="5">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rateExtraBed">Extra Bed Supplement (AED)</label>
+                    <input type="number" class="form-input" id="rateExtraBed" value="80" min="0" step="5">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rateChildAccom">Child Accommodation (AED)</label>
+                    <input type="number" class="form-input" id="rateChildAccom" value="75" min="0" step="5">
+                  </div>
+                </div>
+
+                <div class="form-grid-3 mt-3">
+                  <div class="form-group">
+                    <label class="form-label" for="rateAdultMeal">Adult Meal Supplement (AED)</label>
+                    <input type="number" class="form-input" id="rateAdultMeal" value="60" min="0" step="5">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rateChildMeal">Child Meal Supplement (AED)</label>
+                    <input type="number" class="form-input" id="rateChildMeal" value="30" min="0" step="5">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rateSeasonName">Season Tier</label>
+                    <select class="form-select" id="rateSeasonName">
+                      <option value="Low Season">Low Season (AED 400 Base)</option>
+                      <option value="High Season" selected>High Season (AED 550 Base)</option>
+                      <option value="Peak Season">Peak Season (AED 800 Base)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-section-title mt-4">4. Seasonal Validity Period</div>
+                <div class="form-grid-3">
+                  <div class="form-group">
+                    <label class="form-label" for="rateStartDate">Season Start Date*</label>
+                    <input type="date" class="form-input" id="rateStartDate" value="2026-11-01" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="rateEndDate">Season End Date*</label>
+                    <input type="date" class="form-input" id="rateEndDate" value="2026-11-30" required>
+                  </div>
+                  <div class="form-group flex-end-btn">
+                    <button type="submit" class="btn-purple-primary w-full">Save Sample Rate Configuration</button>
+                  </div>
+                </div>
+              </form>
+
+              <!-- Saved Rate Configurations Table -->
+              <div class="mt-5">
+                <div class="subsection-header">
+                  <h3 class="subsection-title">Configured Training Rates</h3>
+                  <button class="btn-text-secondary" id="resetRatesBtn">&#8635; Restore Default Slide Rates</button>
+                </div>
+                <table class="extranet-table mt-2">
+                  <thead>
+                    <tr>
+                      <th>Room Category</th>
+                      <th>Occupancy Rule</th>
+                      <th>Meal Plan</th>
+                      <th>Base Rate</th>
+                      <th>Extra Adult</th>
+                      <th>Extra Bed</th>
+                      <th>Child Accom</th>
+                      <th>Validity</th>
+                      <th class="text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ratesTableBody">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtab 2: Interactive Rate Calculator Panel -->
+          <div class="subtab-content" id="rateCalculatorSubtab">
+            <div class="extranet-card">
+              <div class="card-title-group mb-4">
+                <h2 class="card-title">Interactive Rate Calculation Panel</h2>
+                <p class="card-caption">Transparent mathematical breakdown of nightly and stay costs without double-counting.</p>
+              </div>
+
+              <div class="calc-workspace-grid">
+                <!-- Calc Inputs -->
+                <div class="calc-inputs-card">
+                  <h3 class="panel-subtitle">Booking Parameters</h3>
+                  
+                  <div class="form-group mb-3">
+                    <label class="form-label" for="calcRoom">Room Category:</label>
+                    <select class="form-select" id="calcRoom">
+                      <option value="Garden Studio" selected>Garden Studio</option>
+                      <option value="Premier Studio Room">Premier Studio Room</option>
+                      <option value="Two Bedroom Suite">Two Bedroom Suite</option>
+                    </select>
+                  </div>
+
+                  <div class="form-row-2 mb-3">
+                    <div class="form-group">
+                      <label class="form-label" for="calcAdults">Adults:</label>
+                      <select class="form-select" id="calcAdults">
+                        <option value="1">1 Adult (Single)</option>
+                        <option value="2" selected>2 Adults (Double)</option>
+                        <option value="3">3 Adults (Triple)</option>
+                        <option value="4">4 Adults (Suite)</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="calcChildren">Children:</label>
+                      <select class="form-select" id="calcChildren">
+                        <option value="0" selected>0 Children</option>
+                        <option value="1">1 Child</option>
+                        <option value="2">2 Children</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row-2 mb-3">
+                    <div class="form-group">
+                      <label class="form-label" for="calcNights">Nights:</label>
+                      <input type="number" class="form-input" id="calcNights" value="3" min="1" max="30">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="calcMealPlan">Meal Plan:</label>
+                      <select class="form-select" id="calcMealPlan">
+                        <option value="RO">RO &mdash; Room Only (+AED 0)</option>
+                        <option value="BB" selected>BB &mdash; Bed &amp; Breakfast (Included)</option>
+                        <option value="HB">HB &mdash; Half Board (+AED 60/adult, +AED 30/child)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label class="checkbox-container">
+                      <input type="checkbox" id="calcExtraBedCheck">
+                      <span class="checkbox-checkmark"></span>
+                      <span>Include Extra Bed Supplement (AED 80/night)</span>
+                    </label>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label class="checkbox-container">
+                      <input type="checkbox" id="calcChild1FreeCheck" checked>
+                      <span class="checkbox-checkmark"></span>
+                      <span>Apply Child 1 Free Accommodation Policy (Age &lt; 6)</span>
+                    </label>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="calcSeason">Select Season:</label>
+                    <select class="form-select" id="calcSeason">
+                      <option value="low">Low Season (Base AED 400)</option>
+                      <option value="high" selected>High Season (Base AED 500)</option>
+                      <option value="peak">Peak Season (Base AED 800)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Calc Transparent Breakdown -->
+                <div class="calc-breakdown-card">
+                  <h3 class="panel-subtitle">Transparent Cost Breakdown</h3>
+
+                  <div class="breakdown-ledger">
+                    <div class="ledger-row">
+                      <span class="ledger-item">Base Nightly Rate (<span id="bdRoomBasis">2 Adults, High Season</span>)</span>
+                      <span class="ledger-amt" id="bdBaseRate">AED 500.00</span>
+                    </div>
+
+                    <div class="ledger-row" id="bdAdultRow">
+                      <span class="ledger-item">3rd Adult Supplement (<span id="bdAdultCount">0</span>)</span>
+                      <span class="ledger-amt" id="bdAdultSupplement">+ AED 0.00</span>
+                    </div>
+
+                    <div class="ledger-row" id="bdExtraBedRow">
+                      <span class="ledger-item">Extra Bed Physical Supplement</span>
+                      <span class="ledger-amt" id="bdExtraBedSupplement">+ AED 0.00</span>
+                    </div>
+
+                    <div class="ledger-row" id="bdChildRow">
+                      <span class="ledger-item">Child Accommodation Supplement (<span id="bdChildDetail">0 children</span>)</span>
+                      <span class="ledger-amt" id="bdChildSupplement">+ AED 0.00</span>
+                    </div>
+
+                    <div class="ledger-row" id="bdMealRow">
+                      <span class="ledger-item">Meal Supplements (<span id="bdMealPlanName">BB Included</span>)</span>
+                      <span class="ledger-amt" id="bdMealSupplement">+ AED 0.00</span>
+                    </div>
+
+                    <div class="ledger-divider"></div>
+
+                    <div class="ledger-row total-nightly">
+                      <span class="ledger-item"><strong>Total Nightly Rate</strong></span>
+                      <span class="ledger-amt" id="bdNightlyTotal">AED 500.00</span>
+                    </div>
+
+                    <div class="ledger-row duration-row">
+                      <span class="ledger-item">Stay Duration</span>
+                      <span class="ledger-amt" id="bdNightsCount">&times; 3 Nights</span>
+                    </div>
+
+                    <div class="ledger-divider thick"></div>
+
+                    <div class="ledger-row grand-total">
+                      <span class="ledger-item">Total Stay Amount</span>
+                      <span class="ledger-amt" id="bdGrandTotal">AED 1,500.00</span>
+                    </div>
+                  </div>
+
+                  <!-- Double Count Prevention Warning Box -->
+                  <div class="calc-alert-box mt-3" id="calcWarningBox">
+                    <strong>Double-Count Prevention:</strong> Meal supplements are verified against the selected meal plan basis so breakfast is not charged twice when BB is already bundled into the base room rate.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtab 3: Child and Extra Bed Policies -->
+          <div class="subtab-content" id="childPoliciesSubtab">
+            <div class="extranet-card">
+              <div class="card-title-group mb-4">
+                <h2 class="card-title">Child Policies, Age Bands, and Bed Arrangements</h2>
+                <p class="card-caption">Detailed breakdown of how age bands, free-child allowances, and physical bedding interact.</p>
+              </div>
+
+              <div class="policy-grid">
+                <div class="policy-card">
+                  <div class="policy-header">
+                    <span class="policy-icon">&#128719;</span>
+                    <h4>Child Bedding Modalities</h4>
+                  </div>
+                  <ul class="policy-list">
+                    <li><strong>Sharing Existing Bed:</strong> Child sleeps in the parent's King or Twin bed. Requires no extra furniture. May be free or have a nominal fee.</li>
+                    <li><strong>With Extra Bed:</strong> Child occupies a separate rollaway bed. Consumes 1 extra bed capacity and incurs an extra-bed surcharge.</li>
+                    <li><strong>Without Extra Bed:</strong> Explicit contract term stating no physical rollaway will be provided, even if an extra occupancy supplement is paid.</li>
+                  </ul>
+                </div>
+
+                <div class="policy-card">
+                  <div class="policy-header">
+                    <span class="policy-icon">&#128118;</span>
+                    <h4>Free-Child Quantity vs. Age Bands</h4>
+                  </div>
+                  <ul class="policy-list">
+                    <li><strong>Age 0&ndash;2.99 (Infant):</strong> Free of charge in existing bedding or complimentary baby cot (subject to availability).</li>
+                    <li><strong>Age 3&ndash;5.99 (Child 1 Free):</strong> First child stays free of room charges when sharing existing bedding.</li>
+                    <li><strong>Age 6&ndash;11.99 (Child Chargeable):</strong> Incurs contracted child supplement (e.g. AED 75/night).</li>
+                    <li><strong>Age 12+ (Adult Rate):</strong> Evaluated strictly as an adult guest for occupancy and pricing.</li>
+                  </ul>
+                </div>
+
+                <div class="policy-card">
+                  <div class="policy-header">
+                    <span class="policy-icon">&#127869;</span>
+                    <h4>Accommodation vs. Meal Charge Rule</h4>
+                  </div>
+                  <p class="policy-text"><strong>Crucial Rule:</strong> Free accommodation does <strong>NOT</strong> mean free meals.</p>
+                  <p class="policy-text">Even when Child 1 is granted AED 0 room accommodation under the free-child policy, lunch/dinner or compulsory Gala Dinner supplements must still be billed at the contracted child meal rate!</p>
+                  <div class="concept-callout alert-warning mt-2">Never assume meals are complimentary because room stays are free.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subtab 4: Seasonal Rates & Date Validity -->
+          <div class="subtab-content" id="seasonalRatesSubtab">
+            <div class="extranet-card">
+              <div class="card-title-group mb-4">
+                <h2 class="card-title">Seasonal Rates &amp; Date Collision Detector</h2>
+                <p class="card-caption">Manage season date ranges and detect gaps, overlaps, or missing rates before they reach production.</p>
+              </div>
+
+              <!-- Interactive Season Date Checker -->
+              <div class="season-checker-bar">
+                <div class="checker-input-group">
+                  <label for="checkStayDate">Test Stay Date:</label>
+                  <input type="date" id="checkStayDate" class="form-input-sm" value="2026-11-15">
+                  <button class="btn-purple-primary btn-sm" id="checkDateBtn">Check Applicable Season</button>
+                </div>
+                <div class="checker-result" id="seasonCheckResult">
+                  Season: <strong class="text-purple">High Season (AED 550)</strong> &mdash; Valid Rate Configured
+                </div>
+              </div>
+
+              <!-- Configured Seasons Display -->
+              <div class="seasons-table-container mt-4">
+                <table class="extranet-table">
+                  <thead>
+                    <tr>
+                      <th>Season Name</th>
+                      <th>Date Range</th>
+                      <th>Duration</th>
+                      <th>Base Rate (Double)</th>
+                      <th>Applicable Rooms</th>
+                      <th>Integrity Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="status-pill status-green">Low Season</span></td>
+                      <td>01 Nov 2026 &ndash; 10 Nov 2026</td>
+                      <td>10 Nights</td>
+                      <td>AED 400 / night</td>
+                      <td>All Categories</td>
+                      <td><span class="badge-status-ok">&#10003; Contiguous</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="status-pill status-purple">High Season</span></td>
+                      <td>11 Nov 2026 &ndash; 20 Nov 2026</td>
+                      <td>10 Nights</td>
+                      <td>AED 550 / night</td>
+                      <td>All Categories</td>
+                      <td><span class="badge-status-ok">&#10003; Contiguous</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="status-pill status-amber">Peak Season</span></td>
+                      <td>21 Nov 2026 &ndash; 30 Nov 2026</td>
+                      <td>10 Nights</td>
+                      <td>AED 800 / night</td>
+                      <td>All Categories</td>
+                      <td><span class="badge-status-ok">&#10003; Contiguous</span></td>
+                    </tr>
+                    <tr class="row-warning">
+                      <td><span class="status-pill status-red">December Season (Simulated Gap)</span></td>
+                      <td>05 Dec 2026 &ndash; 20 Dec 2026</td>
+                      <td>16 Nights</td>
+                      <td>Missing Rate</td>
+                      <td>Garden Studio</td>
+                      <td><span class="badge-status-err">&#9888; 4-Day Gap Detected (01&ndash;04 Dec)</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Seasonal Integrity Checklist -->
+              <div class="integrity-guide mt-4">
+                <h4 class="guide-title">Key Rules for Seasonal Rate Loading</h4>
+                <div class="guide-grid">
+                  <div class="guide-box">
+                    <strong>1. No Date Overlaps:</strong> The system must reject configurations where two different base rates exist for the exact same night in the same room.
+                  </div>
+                  <div class="guide-box">
+                    <strong>2. Detect Calendar Gaps:</strong> If dates 01&ndash;04 Dec are missing, the system must not guess previous season prices; it must return a clear setup error.
+                  </div>
+                  <div class="guide-box">
+                    <strong>3. Boundary Precision:</strong> Checkout date is not charged for that night's accommodation; rate is billed on check-in date nights only.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 3: DASHBOARD & LEARNING OVERVIEW                     -->
+        <!-- ======================================================== -->
+        <section class="tab-pane" id="dashboardPane">
+          <div class="extranet-card">
+            <div class="card-action-bar">
+              <div class="card-title-group">
+                <h2 class="card-title">Training Dashboard &amp; Knowledge Progress</h2>
+                <p class="card-caption">Overview of your mastery of Travex occupancy logic, contract rate structures, and validation rules.</p>
+              </div>
+              <div class="learning-progress-pill">
+                <span>Modules Complete: <strong>6 / 6</strong></span>
+              </div>
+            </div>
+
+            <!-- Stats Overview Cards -->
+            <div class="stats-cards-grid">
+              <div class="stat-card">
+                <div class="stat-number">10</div>
+                <div class="stat-label">Core Business Rules</div>
+                <div class="stat-sub">From slide 22 takeaways</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Contract Test Cases</div>
+                <div class="stat-sub">Automated &amp; manual suite</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Extranet Fidelity</div>
+                <div class="stat-sub">Matches 1025px modal reference</div>
+              </div>
+              <div class="stat-card stat-highlight">
+                <div class="stat-number" id="quizScoreDisplay">5 / 5</div>
+                <div class="stat-label">Quiz Mastery Score</div>
+                <div class="stat-sub">Knowledge check certified</div>
+              </div>
+            </div>
+
+            <!-- 10 Takeaways Section (PowerPoint Slide 22) -->
+            <div class="mt-5">
+              <h3 class="subsection-title">10 Essential Takeaways Every Analyst Must Know</h3>
+              <div class="takeaways-list">
+                <div class="takeaway-item"><span class="t-num">1</span> Hotel contract rules are always the absolute source of truth.</div>
+                <div class="takeaway-item"><span class="t-num">2</span> Base occupancy and maximum occupancy serve completely different purposes.</div>
+                <div class="takeaway-item"><span class="t-num">3</span> Total guest count alone is never sufficient to validate a booking.</div>
+                <div class="takeaway-item"><span class="t-num">4</span> Always validate exact adult/child combinations against explicit permissions.</div>
+                <div class="takeaway-item"><span class="t-num">5</span> Extra occupancy (permission) &ne; extra bed (physical furniture).</div>
+                <div class="takeaway-item"><span class="t-num">6</span> Child age boundaries and bedding rules must be strictly verified.</div>
+                <div class="takeaway-item"><span class="t-num">7</span> Free child accommodation does NOT mean free child meals.</div>
+                <div class="takeaway-item"><span class="t-num">8</span> Contracted rates depend strictly on room + occupancy + meal plan + season.</div>
+                <div class="takeaway-item"><span class="t-num">9</span> When rules are missing or contradictory, clarify &mdash; never guess!</div>
+                <div class="takeaway-item"><span class="t-num">10</span> Test expected outcomes with comprehensive boundary cases before sign-off.</div>
+              </div>
+            </div>
+
+            <!-- Interactive 5-Question Quiz (Slide 22) -->
+            <div class="mt-5">
+              <h3 class="subsection-title">Knowledge Check Quiz (Slide 22)</h3>
+              <div class="quiz-container" id="quizContainer">
+                <!-- Quiz Question 1 -->
+                <div class="quiz-card" data-q="1">
+                  <div class="quiz-question">Q1. Does permission for 2 Adults + 2 Children automatically allow 3 Adults + 1 Child?</div>
+                  <div class="quiz-options">
+                    <button class="quiz-opt" data-correct="false">A) Yes, because both equal 4 total guests</button>
+                    <button class="quiz-opt" data-correct="true">B) No, each combination requires explicit permission in the hotel contract</button>
+                    <button class="quiz-opt" data-correct="false">C) Yes, if an extra bed is available</button>
+                  </div>
+                  <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Quiz Question 2 -->
+                <div class="quiz-card" data-q="2">
+                  <div class="quiz-question">Q2. Does granting Extra Occupancy always imply providing an Extra Bed?</div>
+                  <div class="quiz-options">
+                    <button class="quiz-opt" data-correct="false">A) Yes, every extra guest gets a physical rollaway bed</button>
+                    <button class="quiz-opt" data-correct="true">B) No, extra occupancy is guest permission; extra bed is physical furniture</button>
+                    <button class="quiz-opt" data-correct="false">C) Only if the guest is an adult</button>
+                  </div>
+                  <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Quiz Question 3 -->
+                <div class="quiz-card" data-q="3">
+                  <div class="quiz-question">Q3. If a hotel contract grants free accommodation for Child 1, are meals also free?</div>
+                  <div class="quiz-options">
+                    <button class="quiz-opt" data-correct="false">A) Yes, all inclusions follow the room accommodation</button>
+                    <button class="quiz-opt" data-correct="true">B) No, meal policies must be evaluated separately under contracted meal rates</button>
+                    <button class="quiz-opt" data-correct="false">C) Only for breakfast (BB), never for dinner</button>
+                  </div>
+                  <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Quiz Question 4 -->
+                <div class="quiz-card" data-q="4">
+                  <div class="quiz-question">Q4. What should the system do if an occupancy combination is permitted but has no matching rate?</div>
+                  <div class="quiz-options">
+                    <button class="quiz-opt" data-correct="false">A) Automatically double the single occupancy rate</button>
+                    <button class="quiz-opt" data-correct="false">B) Quote AED 0 and flag for manual post-booking adjustment</button>
+                    <button class="quiz-opt" data-correct="true">C) Do not invent a rate; follow agreed error/no-offer behaviour</button>
+                  </div>
+                  <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Quiz Question 5 -->
+                <div class="quiz-card" data-q="5">
+                  <div class="quiz-question">Q5. Who is responsible for confirming unresolved hotel business rules or contract ambiguities?</div>
+                  <div class="quiz-options">
+                    <button class="quiz-opt" data-correct="false">A) The frontend developer</button>
+                    <button class="quiz-opt" data-correct="true">B) The Product Owner / Hotel Contracting Source of Truth</button>
+                    <button class="quiz-opt" data-correct="false">C) The guest making the reservation</button>
+                  </div>
+                  <div class="quiz-feedback"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 4: INVENTORY VIEW                                   -->
+        <!-- ======================================================== -->
+        <section class="tab-pane" id="inventoryPane">
+          <div class="extranet-card">
+            <div class="card-action-bar">
+              <div class="card-title-group">
+                <h2 class="card-title">Inventory &amp; Allocation Management</h2>
+                <p class="card-caption">Understanding the relationship between room availability and permitted occupancy limits.</p>
+              </div>
+              <div class="flex-row-gap">
+                <span class="badge-status-ok">&#9679; Free Sale Active</span>
+              </div>
+            </div>
+
+            <!-- Conceptual explanation banner -->
+            <div class="training-notice-banner mb-4">
+              <div class="notice-icon">&#128230;</div>
+              <div class="notice-text">
+                <strong>Inventory vs. Occupancy Logic:</strong> Inventory dictates <em>how many physical rooms</em> are open for sale on a given date. Occupancy logic dictates <em>which guest configurations</em> are permitted inside that physical room. A room cannot be booked if either inventory is zero OR the guest combination is forbidden.
+              </div>
+            </div>
+
+            <!-- Sample Extranet Inventory Grid -->
+            <div class="inventory-table-container">
+              <table class="extranet-table">
+                <thead>
+                  <tr>
+                    <th>Room Type</th>
+                    <th>Status</th>
+                    <th>Total Allotted</th>
+                    <th>Sold</th>
+                    <th>Remaining</th>
+                    <th>Free Sale</th>
+                    <th>Stop Sell</th>
+                    <th>Min Stay</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Single Room</strong></td>
+                    <td><span class="status-pill status-green">Available</span></td>
+                    <td>10</td>
+                    <td>3</td>
+                    <td><strong>7</strong></td>
+                    <td><input type="checkbox" checked disabled></td>
+                    <td><button class="btn-sm btn-outline-danger">Enable</button></td>
+                    <td>1 Night</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Night View Studio</strong></td>
+                    <td><span class="status-pill status-green">Available</span></td>
+                    <td>15</td>
+                    <td>12</td>
+                    <td><strong>3</strong></td>
+                    <td><input type="checkbox" checked disabled></td>
+                    <td><button class="btn-sm btn-outline-danger">Enable</button></td>
+                    <td>1 Night</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Premier Studio Room</strong></td>
+                    <td><span class="status-pill status-green">Available</span></td>
+                    <td>8</td>
+                    <td>2</td>
+                    <td><strong>6</strong></td>
+                    <td><input type="checkbox" checked disabled></td>
+                    <td><button class="btn-sm btn-outline-danger">Enable</button></td>
+                    <td>2 Nights</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Two Bedroom Suite</strong></td>
+                    <td><span class="status-pill status-amber">Low Stock</span></td>
+                    <td>4</td>
+                    <td>3</td>
+                    <td><strong>1</strong></td>
+                    <td><input type="checkbox" disabled></td>
+                    <td><button class="btn-sm btn-outline-danger">Enable</button></td>
+                    <td>3 Nights</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Garden Studio</strong></td>
+                    <td><span class="status-pill status-green">Available</span></td>
+                    <td>12</td>
+                    <td>5</td>
+                    <td><strong>7</strong></td>
+                    <td><input type="checkbox" checked disabled></td>
+                    <td><button class="btn-sm btn-outline-danger">Enable</button></td>
+                    <td>1 Night</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 5: PROMOTIONS VIEW                                  -->
+        <!-- ======================================================== -->
+        <section class="tab-pane" id="promotionsPane">
+          <div class="extranet-card">
+            <div class="card-action-bar">
+              <div class="card-title-group">
+                <h2 class="card-title">Promotions &amp; Special Contract Overrides</h2>
+                <p class="card-caption">Learn how promotional rates, early bird upgrades, and refundability interact with contracted baselines.</p>
+              </div>
+            </div>
+
+            <div class="training-notice-banner mb-4">
+              <div class="notice-icon">&#127991;</div>
+              <div class="notice-text">
+                <strong>Promotion Business Rule:</strong> Promotional rates (e.g. 15% Early Bird) apply discount percentages or complimentary upgrades (such as BB to HB), but <em>never override hotel occupancy safety limits</em>. A 5 Adults + 1 Child search cannot be allowed just because an Early Bird promotion is active!
+              </div>
+            </div>
+
+            <!-- Active Sample Promotions -->
+            <div class="promo-grid">
+              <div class="promo-card">
+                <div class="promo-badge">Early Bird Special</div>
+                <h3>15% Off + Complimentary HB Upgrade</h3>
+                <p class="promo-desc">Book 30 days in advance. Includes complimentary meal plan upgrade from Bed &amp; Breakfast to Half Board for base occupants.</p>
+                <div class="promo-meta">
+                  <span>Type: <strong>Refundable</strong></span>
+                  <span>Min Stay: <strong>3 Nights</strong></span>
+                </div>
+              </div>
+
+              <div class="promo-card">
+                <div class="promo-badge promo-nonref">Non-Refundable Promo</div>
+                <h3>25% Last Minute Discount</h3>
+                <p class="promo-desc">Strictly non-refundable. Applies to Single and Double occupancy rates across Garden Studio and Premier Studio rooms.</p>
+                <div class="promo-meta">
+                  <span>Type: <strong>Non-Refundable</strong></span>
+                  <span>Cancellation: <strong>100% Penalty</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 6: REPORT & TESTING LABORATORY (Slide 21)           -->
+        <!-- ======================================================== -->
+        <section class="tab-pane" id="reportPane">
+          <div class="extranet-card">
+            <div class="card-action-bar">
+              <div class="card-title-group">
+                <h2 class="card-title">Validation &amp; Testing Laboratory</h2>
+                <p class="card-caption">Comprehensive checklist verifying contract inputs against expected outcomes (PowerPoint Slide 21).</p>
+              </div>
+              <div class="flex-row-gap">
+                <button class="btn-green-outlined" id="runAllTestsBtn">&#9654; Run All Automated Checks</button>
+              </div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="test-filters-bar">
+              <div class="filter-group">
+                <label>Filter Status:</label>
+                <button class="filter-pill active" data-filter="all">All (13)</button>
+                <button class="filter-pill" data-filter="Pass">Passed (<span id="passCount">0</span>)</button>
+                <button class="filter-pill" data-filter="Fail">Failed (<span id="failCount">0</span>)</button>
+                <button class="filter-pill" data-filter="Blocked">Blocked (<span id="blockedCount">0</span>)</button>
+                <button class="filter-pill" data-filter="Not Run">Not Run (<span id="notRunCount">13</span>)</button>
+              </div>
+            </div>
+
+            <!-- Test Cases Table -->
+            <div class="test-table-container mt-3">
+              <table class="extranet-table" id="testCasesTable">
+                <thead>
+                  <tr>
+                    <th>Test Scenario</th>
+                    <th>Input Parameters</th>
+                    <th>Expected Result</th>
+                    <th>Actual Result</th>
+                    <th>Status</th>
+                    <th>Remarks &amp; Rationale</th>
+                    <th class="text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="testTableBody">
+                  <!-- Populated dynamically with all 13 slide cases -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 7: DEVELOPER COORDINATION (Slide 19 & 20)           -->
+        <!-- ======================================================== -->
+        <section class="tab-pane" id="devcoordPane">
+          <div class="extranet-card">
+            <div class="card-action-bar">
+              <div class="card-title-group">
+                <h2 class="card-title">Developer Coordination &amp; Requirements Template</h2>
+                <p class="card-caption">Standardized engineering specification to communicate hotel occupancy logic clearly to backend teams.</p>
+              </div>
+              <button class="btn-purple-primary" id="copyDevGuideBtn">&#128203; Copy Developer Meeting Script</button>
+            </div>
+
+            <!-- Verbatim Slide 19 Developer Script Box -->
+            <div class="script-box mt-3">
+              <div class="script-header">
+                <span class="script-badge">EXACT VERBATIM SCRIPT (POWERPOINT SLIDE 19)</span>
+                <span class="script-note">Use this explanation in engineering sync meetings</span>
+              </div>
+              <blockquote class="script-quote" id="developerScriptText">
+                "The current issue is that an unsupported occupancy combination can be accepted. We need Travex to validate each configured adult/child combination against the hotel contract, including child ages, bed requirements, supplements, meal rules, and applicable dates. The system should not infer that a different combination is allowed just because the total guest count fits. Before development, we will confirm the unresolved rules with the Product Owner and agree the expected result for each test case."
+              </blockquote>
+            </div>
+
+            <!-- Slide 20 Clarification Tracker -->
+            <div class="mt-5">
+              <h3 class="subsection-title">Questions to Clarify with the Product Owner (Slide 20)</h3>
+              <p class="card-caption mb-3">Every requirement must be categorized clearly as Confirmed Issue, Assumption, or Open Question.</p>
+
+              <div class="tracker-table-container">
+                <table class="extranet-table">
+                  <thead>
+                    <tr>
+                      <th>Classification</th>
+                      <th>Contract / System Question</th>
+                      <th>Current System State</th>
+                      <th>Agreed Resolution / Next Step</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="badge-tag confirmed">CONFIRMED ISSUE</span></td>
+                      <td>Reported 2BR case accepts 5 adults + 1 child, which hotel contract strictly denies.</td>
+                      <td>Accepted because total guests (6) &le; nominal capacity (6).</td>
+                      <td>Add exact adult ceiling validator to suppress unsupported offer.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge-tag open-q">OPEN QUESTION</span></td>
+                      <td>Is extra-bed quantity fixed per room or per occupancy combination?</td>
+                      <td>Room occupancy screen has 1 global extra occupancy field.</td>
+                      <td>Clarify with PO: can different combinations have varying extra-bed rules?</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge-tag open-q">OPEN QUESTION</span></td>
+                      <td>Can one guest combination be offered simultaneously with and without an extra bed?</td>
+                      <td>Current UI has single toggle.</td>
+                      <td>Determine whether to present guest two rate options at checkout.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge-tag assumption">ASSUMPTION</span></td>
+                      <td>"Extra Occupancy" in the UI means guest permission, not necessarily extra bedding.</td>
+                      <td>Currently ambiguous.</td>
+                      <td>Confirmed via documentation; physical bed requires separate supplement.</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge-tag open-q">OPEN QUESTION</span></td>
+                      <td>Can two children share existing beds? Which exact age bands apply?</td>
+                      <td>Age dropdowns currently lack hotel-specific cutoffs.</td>
+                      <td>Define contract age limits (e.g. 0-2 infant, 3-5 free, 6-11 chargeable).</td>
+                    </tr>
+                    <tr>
+                      <td><span class="badge-tag open-q">OPEN QUESTION</span></td>
+                      <td>Are adult and child meal supplements bundled or charged separately?</td>
+                      <td>Extranet displays combined rate plans.</td>
+                      <td>Allow itemized meal supplements (RO, BB, HB) in pricing section.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Full Requirement Template -->
+            <div class="mt-5">
+              <h3 class="subsection-title">Complete Travex Occupancy Requirement Template</h3>
+              <div class="req-template-card">
+                <div class="req-item"><strong>1. Title:</strong> Room Occupancy Combination Validation &amp; Rate Association Engine</div>
+                <div class="req-item"><strong>2. Current Problem:</strong> System validates total passenger count instead of exact contracted adult/child/bedding matrices.</div>
+                <div class="req-item"><strong>3. Business Rules:</strong> Validate exact adult ceiling; validate child ages against hotel contract bands; separate extra occupancy from physical bed provision.</div>
+                <div class="req-item"><strong>4. Acceptance Criteria:</strong> An offer is bookable IF AND ONLY IF (combination is explicitly contracted) AND (a valid rate exists for that date and occupancy).</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 8: GALLERY (Preserved Extranet Module)              -->
+        <!-- ======================================================== -->
+        <section class="tab-pane" id="galleryPane">
+          <div class="extranet-card">
+            <div class="card-action-bar">
+              <div class="card-title-group">
+                <h2 class="card-title">Gallery &amp; Room View Standards</h2>
+                <p class="card-caption">Sample extranet media management demonstrating how room views and bedding layouts are presented.</p>
+              </div>
+            </div>
+            <div class="gallery-grid">
+              <div class="gallery-item">
+                <div class="gallery-thumb" style="background-color: #2C3E50;">
+                  <span class="thumb-label">Garden Studio (King Bed)</span>
+                </div>
+                <div class="gallery-info"><strong>Garden Studio</strong> &mdash; Room View: Garden View</div>
+              </div>
+              <div class="gallery-item">
+                <div class="gallery-thumb" style="background-color: #1A365D;">
+                  <span class="thumb-label">Premier Studio (Twin Beds)</span>
+                </div>
+                <div class="gallery-info"><strong>Premier Studio</strong> &mdash; Room View: Sea View</div>
+              </div>
+              <div class="gallery-item">
+                <div class="gallery-thumb" style="background-color: #34495E;">
+                  <span class="thumb-label">Two Bedroom Suite (Master + Twin)</span>
+                </div>
+                <div class="gallery-info"><strong>Two Bedroom Suite</strong> &mdash; Room View: Marina View</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 9: CONTENT (Preserved Extranet Module)              -->
+        <!-- ======================================================== -->
+        <section class="tab-pane" id="contentPane">
+          <div class="extranet-card">
+            <div class="card-action-bar">
+              <div class="card-title-group">
+                <h2 class="card-title">Property Content &amp; Hotel Descriptions</h2>
+                <p class="card-caption">Fictional hotel descriptions, check-in policies, and property amenity definitions.</p>
+              </div>
+            </div>
+            <div class="content-body-sample">
+              <h3>Hotel Information: LOS SANTOS GRAND PALACE (ID: 488)</h3>
+              <p>Luxury resort destination located in Dubai. Features 150 well-appointed rooms, private beach access, international dining facilities, and state-of-the-art conference facilities.</p>
+              <h4 class="mt-3">Standard Property Policies</h4>
+              <ul>
+                <li>Check-in: 15:00 hrs | Check-out: 12:00 hrs</li>
+                <li>Child Policy: Children under 6 stay free in existing bedding (max 1 free child per room).</li>
+                <li>Extra Bed Policy: Extra beds subject to room category availability at AED 80/night.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- PRESERVED EXTRANET PLACEHOLDER MODULES                   -->
+        <!-- ======================================================== -->
+        <section class="tab-pane" id="placeholderPane">
+          <div class="extranet-card">
+            <div class="card-action-bar">
+              <div class="card-title-group">
+                <h2 class="card-title" id="placeholderTitle">Extranet Module</h2>
+                <p class="card-caption" id="placeholderSubtitle">Preserved Travex Extranet Navigation Section</p>
+              </div>
+            </div>
+            <div class="placeholder-content-box">
+              <div class="placeholder-icon">&#128203;</div>
+              <h3>Module Context: <span id="placeholderModuleName">Roles &amp; Permissions</span></h3>
+              <p id="placeholderDesc">This standard extranet section maintains navigation fidelity with the reference UI. In live hotel operations, this module handles staff credentials, contract signing, or metasearch distribution.</p>
+              <div class="concept-callout mt-3">
+                <strong>Training Context:</strong> For occupancy and rate-loading mastery, visit the <strong>Property</strong>, <strong>Pricing</strong>, and <strong>Report &amp; Testing</strong> modules.
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ADD ROOM DETAILS (Faithful Screenshot Recreation)  -->
+  <!-- ======================================================== -->
+  <div class="modal-backdrop" id="addRoomModalBackdrop">
+    <div class="modal-window" id="addRoomModalWindow" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Add Room Details</h2>
+        <button class="modal-close-btn" id="closeAddRoomModalBtn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <!-- Modal Body / Form -->
+      <form id="roomDetailsForm" class="modal-body">
+        
+        <!-- Section 1: Room Information Fields (Matches Screenshot) -->
+        <div class="form-row-3">
+          <!-- Total Rooms* -->
+          <div class="form-group">
+            <label class="form-label" for="modalTotalRooms">Total Rooms<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalTotalRooms" required>
+              <option value="NA" selected>NA</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+            <div class="field-error-msg" id="errTotalRooms"></div>
+          </div>
+
+          <!-- Room view* -->
+          <div class="form-group">
+            <label class="form-label" for="modalRoomView">Room view<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalRoomView" required>
+              <option value="NA" selected>NA</option>
+              <option value="City View">City View</option>
+              <option value="Sea View">Sea View</option>
+              <option value="Garden View">Garden View</option>
+              <option value="Courtyard View">Courtyard View</option>
+              <option value="Marina View">Marina View</option>
+              <option value="Night View">Night View</option>
+            </select>
+            <div class="field-error-msg" id="errRoomView"></div>
+          </div>
+
+          <!-- Smoking -->
+          <div class="form-group">
+            <label class="form-label" for="modalSmoking">Smoking</label>
+            <select class="form-select" id="modalSmoking">
+              <option value="Not Allowed" selected>Not Allowed</option>
+              <option value="Allowed">Allowed</option>
+              <option value="Designated Areas Only">Designated Areas Only</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Optional Room Name (For Training Editing) -->
+        <div class="form-group mt-3">
+          <label class="form-label" for="modalRoomName">Room Category Name<span class="required-asterisk">*</span></label>
+          <input type="text" class="form-input" id="modalRoomName" placeholder="e.g. Deluxe Premier Suite" value="Premier Studio Room" required>
+          <div class="field-error-msg" id="errRoomName"></div>
+        </div>
+
+        <!-- Description (Textarea matching Screenshot) -->
+        <div class="form-group mt-3">
+          <label class="form-label" for="modalDescription">Description</label>
+          <textarea class="form-textarea" id="modalDescription" rows="3" placeholder="Enter room description, amenities, and bedding highlights..."></textarea>
+        </div>
+
+        <!-- Section 2: Room Occupancy Heading (Exact Screenshot Style) -->
+        <div class="modal-section-heading">
+          Room Occupancy
+        </div>
+
+        <!-- Occupancy Row 1: Total Occupancy* | Extra Occupancy* | Age Based Occupancy toggle -->
+        <div class="form-row-3 align-items-center">
+          <!-- Total Occupancy* -->
+          <div class="form-group">
+            <label class="form-label" for="modalTotalOccupancy">Total Occupancy<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalTotalOccupancy" required>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+            <div class="field-error-msg" id="errTotalOccupancy"></div>
+          </div>
+
+          <!-- Extra Occupancy* -->
+          <div class="form-group">
+            <label class="form-label" for="modalExtraOccupancy">Extra Occupancy<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalExtraOccupancy" required>
+              <option value="0">0</option>
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+            <div class="field-error-msg" id="errExtraOccupancy"></div>
+          </div>
+
+          <!-- Age Based Occupancy Toggle (Matches Screenshot) -->
+          <div class="form-group toggle-group">
+            <div class="toggle-control-wrapper">
+              <label class="switch-control">
+                <input type="checkbox" id="modalAgeBasedToggle">
+                <span class="slider round"></span>
+              </label>
+              <span class="toggle-label" id="ageBasedStatusLabel">Age Based Occupancy</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Occupancy Row 2: Total Bed Room* | Total Bath Room* | Total Living Room* -->
+        <div class="form-row-3 mt-3">
+          <!-- Total Bed Room* -->
+          <div class="form-group">
+            <label class="form-label" for="modalBedRoom">Total Bed Room<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalBedRoom" required>
+              <option value="0">0</option>
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+            <div class="field-error-msg" id="errBedRoom"></div>
+          </div>
+
+          <!-- Total Bath Room* -->
+          <div class="form-group">
+            <label class="form-label" for="modalBathRoom">Total Bath Room<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalBathRoom" required>
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+            <div class="field-error-msg" id="errBathRoom"></div>
+          </div>
+
+          <!-- Total Living Room* -->
+          <div class="form-group">
+            <label class="form-label" for="modalLivingRoom">Total Living Room<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalLivingRoom" required>
+              <option value="0" selected>0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </select>
+            <div class="field-error-msg" id="errLivingRoom"></div>
+          </div>
+        </div>
+
+        <!-- Occupancy Row 3: Adults(Max)* | Children(Max)* | Infant(Max)* -->
+        <div class="form-row-3 mt-3">
+          <!-- Adults(Max)* -->
+          <div class="form-group">
+            <label class="form-label" for="modalAdultsMax">Adults(Max)<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalAdultsMax" required>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <div class="field-error-msg" id="errAdultsMax"></div>
+          </div>
+
+          <!-- Children(Max)* -->
+          <div class="form-group">
+            <label class="form-label" for="modalChildrenMax">Children(Max)<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalChildrenMax" required>
+              <option value="0">0</option>
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+            <div class="field-error-msg" id="errChildrenMax"></div>
+          </div>
+
+          <!-- Infant(Max)* -->
+          <div class="form-group">
+            <label class="form-label" for="modalInfantMax">Infant(Max)<span class="required-asterisk">*</span></label>
+            <select class="form-select" id="modalInfantMax" required>
+              <option value="0">0</option>
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+            </select>
+            <div class="field-error-msg" id="errInfantMax"></div>
+          </div>
+        </div>
+
+        <!-- Hidden ID for Editing -->
+        <input type="hidden" id="modalEditRoomId" value="">
+
+        <!-- Modal Footer Actions (Matches Screenshot) -->
+        <div class="modal-footer">
+          <div class="modal-training-disclaimer">
+            <span class="disc-icon">&#9432;</span>
+            <span>Local training simulation. Changes will update your active training session.</span>
+          </div>
+          <!-- Primary Purple Action Button from Screenshot -->
+          <button type="submit" class="btn-purple-primary" id="modalSaveBtn">SAVE</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
